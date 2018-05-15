@@ -24,6 +24,13 @@ module.exports = {
                 MiniCssExtractPlugin.loader,
                 'css-loader'
             ]
+        }, {
+            test: /\.(js|jsx)$/,
+            loader: 'babel-loader',
+            options: {
+                presets: ['react']
+            },
+            exclude: /node_modules/
         }]
     },
     plugins: [
@@ -32,7 +39,9 @@ module.exports = {
         new MiniCssExtractPlugin({ filename: "[name].css", chunkFilename: "[id].css" })
     ],
     externals: {
-        lodash: '_'
+        lodash: '_',
+        react: 'React',
+        'react-dom': 'ReactDOM'
     },
     optimization: {
         splitChunks: {
