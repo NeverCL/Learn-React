@@ -28,7 +28,10 @@ module.exports = {
             test: /\.(js|jsx)$/,
             loader: 'babel-loader',
             options: {
-                presets: ['react']
+                presets: ['react'],
+                plugins: [
+                    ["import", { "libraryName": "antd", "style": "css" }]
+                ]
             },
             exclude: /node_modules/
         }]
@@ -46,11 +49,12 @@ module.exports = {
     optimization: {
         splitChunks: {
             cacheGroups: {
-                vendors: {
+                common: {
                     test: /[\\/]node_modules[\\/]/,
-                    name: "vendors",
-                    chunks: "initial"
-                }
+                    name: "common",
+                    chunks: "initial",
+                    enforce: true
+                },
             }
         }
     }
