@@ -38,7 +38,7 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin(['dist']),
-        new HtmlWebpackPlugin({ minify: true, hash: true }),
+        new HtmlWebpackPlugin({ template: 'src/index.dev.html', minify: true, hash: true }),
         new MiniCssExtractPlugin({ filename: "[name].css", chunkFilename: "[id].css" })
     ],
     optimization: {
