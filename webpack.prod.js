@@ -5,13 +5,14 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require('path');
 
 module.exports = {
-    mode: 'development',
+    mode: 'production',
     entry: {
         main: './src/index.js',
     },
-    devtool: 'inline-source-map',
+    devtool: 'source-map',
     devServer: {
-        contentBase: './dist'
+        contentBase: './dist',
+        host: '192.168.0.75'
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -30,7 +31,7 @@ module.exports = {
             options: {
                 presets: ['react'],
                 plugins: [
-                    ["import", { "libraryName": "antd", "style": "css" }]
+                    // ["import", { "libraryName": "antd", "style": "css" }]
                 ]
             },
             exclude: /node_modules/
@@ -38,9 +39,15 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin(['dist']),
-        new HtmlWebpackPlugin({ minify: true, hash: true }),
+        new HtmlWebpackPlugin({ template: 'src/index.html', minify: true, hash: true }),
         new MiniCssExtractPlugin({ filename: "[name].css", chunkFilename: "[id].css" })
     ],
+    externals: {
+        lodash: '_',
+        react: 'React',
+        'react-dom': 'ReactDOM',
+        antd: 'antd'
+    },
     optimization: {
         splitChunks: {
             cacheGroups: {
