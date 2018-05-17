@@ -4,7 +4,7 @@ import { DatePicker, LocaleProvider, Button, message, notification } from 'antd'
 
 let zhCN = null;
 if (process.env.NODE_ENV === 'production') {
-    var antd = require('antd'); // 生产环境
+    let antd = require('antd'); // 生产环境
     zhCN = antd.locales.zh_CN;
 } else {
     zhCN = require('antd/lib/locale-provider/zh_CN'); // 开发环境
