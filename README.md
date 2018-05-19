@@ -8,6 +8,8 @@
   - [插件](./docs/webpack/插件.md)
 - react
   - [简介](./docs/react/简介.md)
+- redux
+  - [简介](./docs/redux/简介.md)
 - [常见问题](./docs/常见问题.md)
 
 ## 准备
