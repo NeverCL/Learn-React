@@ -1,8 +1,9 @@
 // input + btn
 // connect
 import React, { Component } from 'react';
-import { createStore, bindActionCreators } from 'redux';
+import { createStore, bindActionCreators, applyMiddleware } from 'redux';
 import { Provider, connect } from 'react-redux';
+import thunkMiddleware from 'redux-thunk'
 
 // 方式1：
 class Todo extends Component {
@@ -30,8 +31,8 @@ class Todo extends Component {
 // }
 
 // mapDispatch方式1：
-var WarpTodo = connect(state => ({ todo: state.todo }),
-    dispatch => ({ clickTodo: () => dispatch({ type: 'click' }) }))(Todo);
+// var WarpTodo = connect(state => ({ todo: state.todo }),
+// dispatch => ({ clickTodo: () => dispatch({ type: 'click' }) }))(Todo);
 
 // mapDispatch方式2：
 // let actions = {
@@ -42,6 +43,13 @@ var WarpTodo = connect(state => ({ todo: state.todo }),
 // var WarpTodo = connect(state => ({ todo: state.todo }),
 //     dispatch => bindActionCreators(actions, dispatch))(Todo);
 
+let clickFunc = () => dispatch => setInterval(() => { dispatch({ type: 'click' }) }, 1000);
+
+var WarpTodo = connect(state => ({ todo: state.todo }),
+    dispatch => ({
+        clickTodo: () => dispatch(clickFunc())
+    }))(Todo);
+
 function clickReduce(state = { todo: 1 }, action) {
     switch (action.type) {
         case 'click':
@@ -51,7 +59,7 @@ function clickReduce(state = { todo: 1 }, action) {
     }
 }
 
-let store = createStore(clickReduce);
+let store = createStore(clickReduce, applyMiddleware(thunkMiddleware));
 
 export default function () {
     return (
