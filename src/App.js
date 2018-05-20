@@ -1,26 +1,64 @@
-// 各种Demo 可临时在此处测试
-import { createStore } from 'redux'
+// input + btn
+// connect
+import React, { Component } from 'react';
+import { createStore, bindActionCreators } from 'redux';
+import { Provider, connect } from 'react-redux';
 
-// reducer, 纯函数签名： (state, action) => state.
-function counter(state = 0, action) {
-    switch (action.type) {
-        case 'INCREMENT':
-            return state + 1
-        case 'DECREMENT':
-            return state - 1
-        default:
-            return state
+// 方式1：
+class Todo extends Component {
+    render() {
+        let todo = this.props.todo;
+        // console.log(this.props)
+        return (
+            <div>
+                <div>{todo}</div>
+                <button onClick={this.props.clickTodo}>Click</button>
+            </div>
+        )
     }
 }
 
-// state
-let store = createStore(counter); // 会调用
-console.log(store.getState())
+// 方式2：
+// function Todo(props) {
+//     // let todo = props.todo;
+//     return (
+//         <div>
+//             <div>{todo}</div>
+//             <button onClick={props.clickTodo}>Click</button>
+//         </div>
+//     )
+// }
 
-// 可以手动订阅更新，也可以事件绑定到视图层。
-store.subscribe(() =>
-    console.log(store.getState())
-);
+// mapDispatch方式1：
+var WarpTodo = connect(state => ({ todo: state.todo }),
+    dispatch => ({ clickTodo: () => dispatch({ type: 'click' }) }))(Todo);
 
-// 修改state
-store.dispatch({ type: 'INCREMENT' });
+// mapDispatch方式2：
+// let actions = {
+//     clickTodo: () => ({
+//         type: 'click'
+//     })
+// }
+// var WarpTodo = connect(state => ({ todo: state.todo }),
+//     dispatch => bindActionCreators(actions, dispatch))(Todo);
+
+function clickReduce(state = { todo: 1 }, action) {
+    switch (action.type) {
+        case 'click':
+            return Object.assign({}, state, { todo: state.todo + 1 });
+        default:
+            return state;
+    }
+}
+
+let store = createStore(clickReduce);
+
+export default function () {
+    return (
+        <Provider store={store}>
+            <div>
+                <WarpTodo />
+            </div>
+        </Provider>
+    )
+}
