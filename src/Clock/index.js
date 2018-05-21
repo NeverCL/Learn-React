@@ -1,32 +1,20 @@
 import React, { Component } from 'react'
+import Loadable from 'react-loadable';
+// import Loading from './clock';
 
-export default class Clock extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            date: new Date()
-        }
-    }
+function Loading() {
+    return (
+        <div>Loading</div>
+    )
+}
 
-    componentDidMount() {
-        this.tickId = setInterval(() => this.tick(), 1000);
-    }
+const Clock = Loadable({
+    loader: () => import('./clock'),
+    loading: Loading,
+})
 
-    componentWillUnmount() {
-        clearInterval(this.tickId);
-    }
-
-    tick() {
-        this.setState({
-            date: new Date()
-        });
-    }
-
+export default class LoadableClock extends React.Component {
     render() {
-        return (
-            <div>
-                Time: {this.state.date.toLocaleString()}
-            </div>
-        )
+        return <Clock />;
     }
 }

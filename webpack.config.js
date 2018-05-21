@@ -30,6 +30,7 @@ module.exports = {
             options: {
                 presets: ['react'],
                 plugins: [
+                    "syntax-dynamic-import",
                     ["import", { "libraryName": "antd", "style": "css" }]
                 ]
             },

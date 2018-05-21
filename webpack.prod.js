@@ -31,7 +31,7 @@ module.exports = {
             options: {
                 presets: ['react'],
                 plugins: [
-                    // ["import", { "libraryName": "antd", "style": "css" }]
+                    "syntax-dynamic-import",
                 ]
             },
             exclude: /node_modules/
