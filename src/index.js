@@ -6,4 +6,4 @@ var root = document.createElement('div');
 root.id = 'root';
 document.body.insertBefore(root, document.body.firstChild);
 
-render(<Route />, root);
+render(<div>hello</div>, root);
